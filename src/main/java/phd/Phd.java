@@ -13,7 +13,6 @@ import phd.image.SARImage;
 import phd.image.filter.CleanFilter;
 import phd.image.filter.ImageFilter;
 import phd.image.filter.StreetsFilter;
-//import phd.image.filter.StreetsMapFilter;
 import phd.processing.Processing;
 import phd.storage.DefaultProxy;
 import phd.storage.ImageProxy;
@@ -23,9 +22,8 @@ public class Phd {
 		Processing p = new Processing();
 		ImageProxy store = new DefaultProxy();
 		ImageFilter<OpticalImage> streetsFilter = new StreetsFilter();
-//		ImageFilter<OpticalImage> streetsMapFilter;
 		CleanFilter cleanFilter;
-//		OpticalImage streetMap;
+		OpticalImage streetMap;
 
 		Coordinates x = new Coordinates(1, 2);
 		Coordinates y = new Coordinates(3, 4);
@@ -48,13 +46,9 @@ public class Phd {
 				img = streetsFilter.filter(img);
 			
 				// Retrieve open street map image for same coordinates as SAR image
-//				streetMap = store.retrieveStreetMap(sar.getCoordinates());
+				streetMap = store.retrieveStreetMap(sar.getCoordinates());
 				
-				// Refine filtering of streets
-//				streetsMapFilter = new StreetsMapFilter(streetMap);
-//				img = streetsMapFilter.filter(img);
-				
-				cleanFilter = new CleanFilter(sar);
+				cleanFilter = new CleanFilter(sar, streetMap);
 				img = cleanFilter.filter(img);
 	
 				// Apply elevation data from SAR image to b/w image
