@@ -22,13 +22,13 @@ public class DefaultProxy implements ImageProxy {
 	}
 
 	@Override
-	public OpticalImage retrieveOptical(List<Coordinates> coordinates) {
+	public OpticalImage retrieveOptical(Coordinates topLeftCoords, Coordinates bottomRightCoords) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public OpticalImage retrieveStreetMap(List<Coordinates> coordinates) {
+	public OpticalImage retrieveStreetMap(Coordinates topLeftCoords, Coordinates bottomRightCoords) {
 		// TODO Auto-generated method stub
 		return null;
 	}
