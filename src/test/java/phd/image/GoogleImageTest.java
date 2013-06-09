@@ -2,6 +2,7 @@ package phd.image;
 
 import static org.junit.Assert.assertTrue;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +13,8 @@ import org.junit.Test;
 
 public class GoogleImageTest {
 
-	private static final String TEST_IMAGE_ROADS="src/test/resources/testImage2.jpg";
-	private static final String RESULT_IMAGE="src/test/resources/testImage2-distances.jpg";
+	private static final String TEST_IMAGE_ROADS="src/test/resources/testImage6.gif";
+	private static final String RESULT_IMAGE="src/test/resources/testImage6-distances.jpg";
 	
 	@Test
 	public void test() throws IOException {	
@@ -23,21 +24,25 @@ public class GoogleImageTest {
 		image.setImage(bufferedImage);
 
 		BufferedImage resultImage = new BufferedImage(
-				bufferedImage.getHeight(), bufferedImage.getWidth(), 
-				bufferedImage.getType());
+				bufferedImage.getWidth(), bufferedImage.getHeight(), 
+				BufferedImage.TYPE_INT_RGB);
 		
 		System.out.println(bufferedImage.getWidth());
 		System.out.println(bufferedImage.getHeight());
 		
+		double maxDistance = Math.sqrt(Math.pow(bufferedImage.getWidth(), 2) + 
+				Math.pow(bufferedImage.getHeight(), 2));
+		
 		for (int x = 0; x < bufferedImage.getWidth(); x++) {
 			for (int y = 0; y < bufferedImage.getHeight(); y++) {
 				double distance = image.roadDistance(new Coordinates(x, y));
-				if (y >= 627) {
-					System.out.println(x);
-					System.out.println(y);
+				double normalized = distance*255.0/maxDistance;
+				
+				if (normalized <= 1) {
+					resultImage.setRGB(x, y, Color.BLACK.getRGB());
+				} else {
+					resultImage.setRGB(x, y, Color.WHITE.getRGB());
 				}
-								
-				bufferedImage.setRGB(x, y, (int)distance);
 			}
 		}
 		

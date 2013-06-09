@@ -39,7 +39,12 @@ public class GoogleImage extends OpticalImage {
 		while (!q.isEmpty()) {
 			c = q.poll();
 			
-			if (bufferImage.getRGB(c.x, c.y) == ROADCOLOUR) {
+			Color color = new Color(bufferImage.getRGB(c.x, c.y));
+			int red = color.getRed();
+			int green = color.getGreen();
+			int blue = color.getBlue();
+			
+			if (red >= 252 && green >= 252 && blue >= 252) {
 				break;
 			} else {
 				offerNeighbours(q, visited, c);

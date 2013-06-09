@@ -7,6 +7,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import phd.image.Coordinates;
+import phd.image.GoogleImage;
 import phd.image.OpticalImage;
 import phd.image.RandomSARImage;
 import phd.image.SARImage;
@@ -23,7 +24,7 @@ public class Phd {
 		ImageProxy store = new DefaultProxy();
 		ImageFilter<OpticalImage> streetsFilter = new StreetsFilter();
 		CleanFilter cleanFilter;
-		OpticalImage streetMap;
+		GoogleImage streetMap;
 
 		Coordinates x = new Coordinates(1, 2);
 		Coordinates y = new Coordinates(3, 4);
@@ -46,7 +47,9 @@ public class Phd {
 				img = streetsFilter.filter(img);
 			
 				// Retrieve open street map image for same coordinates as SAR image
-				streetMap = store.retrieveStreetMap(sar.getCoordinates());
+				streetMap = store.retrieveStreetMap(
+						sar.getTopLeftCoords(), 
+						sar.getBottomRightCoords());
 				
 				cleanFilter = new CleanFilter(sar, streetMap);
 				img = cleanFilter.filter(img);

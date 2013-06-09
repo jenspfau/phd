@@ -4,13 +4,15 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
+import phd.image.Coordinates;
+import phd.image.GoogleImage;
 import phd.image.OpticalImage;
 import phd.image.SARImage;
 
 public class CleanFilter implements ImageFilter<OpticalImage> {
 
 	private SARImage sar;
-	private OpticalImage streetMap;
+	private GoogleImage streetMap;
 	
 	private static int[][] neighbours;
 	static {
@@ -25,7 +27,7 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 			new int[] {-1, 0}};
 	}
 
-	public CleanFilter(SARImage sar, OpticalImage streetMap) {
+	public CleanFilter(SARImage sar, GoogleImage streetMap) {
 		this.sar = sar;
 		this.streetMap = streetMap;
 	}
@@ -37,15 +39,24 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 		BufferedImage result = new BufferedImage(bufferImage.getWidth(), bufferImage.getHeight(), bufferImage.getType());
 		
 		double neighbourProportion;
-		double elevationDifference;
+		//double elevationDifference;
 		double roadDistance;
+		
+		double maxDistance = Math.sqrt(Math.pow(result.getWidth(), 2) + 
+				Math.pow(result.getHeight(), 2));		
+		
 		for(int x =0; x < result.getHeight(); x++){
 			for(int y = 0; y < result.getWidth(); y++){
 				neighbourProportion = calculateNeighboursBlack(bufferImage, x, y);
-				elevationDifference = calculateElevationDifference(bufferImage, x, y);
-				roadDistance = calculateRoadDistance(x, y);
+				//elevationDifference = calculateElevationDifference(bufferImage, x, y);
+				roadDistance = streetMap.roadDistance(new Coordinates(x, y));
 				
+				double normalized = roadDistance*255.0/maxDistance;
 				
+				if (normalized <= 1 && neighbourProportion >= 0.5)
+					result.setRGB(x, y, Color.BLACK.getRGB());
+				else
+					result.setRGB(x, y, Color.WHITE.getRGB());
 			}
 		}
 		OpticalImage filteredImage = new OpticalImage(
@@ -55,10 +66,6 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 		return filteredImage;
 	}
 
-	private float calculateRoadDistance(int x, int y) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	private float calculateElevationDifference(BufferedImage img, int x, int y) {
 		int numNeighbours = 0;

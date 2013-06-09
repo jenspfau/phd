@@ -3,6 +3,7 @@ package phd.storage;
 import java.util.List;
 
 import phd.image.Coordinates;
+import phd.image.GoogleImage;
 import phd.image.Image;
 import phd.image.OpticalImage;
 import phd.image.SARImage;
@@ -15,5 +16,5 @@ public interface ImageProxy {
 	public OpticalImage retrieveOptical(Coordinates topLeftCoords, Coordinates bottomRightCoords);
 	
 	// Retrieve street map image for given coordinates
-	public OpticalImage retrieveStreetMap(Coordinates topLeftCoords, Coordinates bottomRightCoords);
+	public GoogleImage retrieveStreetMap(Coordinates topLeftCoords, Coordinates bottomRightCoords);
 }
