@@ -2,10 +2,7 @@ package phd.image.filter;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import phd.image.OpticalImage;
 
@@ -14,8 +11,7 @@ public class StreetsFilter implements ImageFilter<OpticalImage> {
 	@Override
 	public OpticalImage filter(OpticalImage image) throws IOException {
 
-		File file = image.getFile();
-		BufferedImage bufferImage = ImageIO.read(file);
+		BufferedImage bufferImage = image.getImage();
 
 		double intensityModel = calculateIntensity(bufferImage);
 
@@ -42,10 +38,10 @@ public class StreetsFilter implements ImageFilter<OpticalImage> {
 			}
 		}
 		
-		OpticalImage filteredImage = new OpticalImage();
-	    File outputfile = new File(image.getResultFileName());
-	    ImageIO.write(result, "jpg", outputfile);
-		filteredImage.setFile(outputfile);
+		OpticalImage filteredImage = new OpticalImage(
+				image.getCoordinates().get(0),
+				image.getCoordinates().get(1));
+		filteredImage.setImage(result);
 		return filteredImage;
 	}
 

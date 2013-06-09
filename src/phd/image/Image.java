@@ -1,17 +1,20 @@
 package phd.image;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
+
 public abstract class Image {
 	
-	private File file;
 	private Date creationDate;
 	private List<Coordinates> coordinates;
-	private String resultFileName;
 	private Coordinates x;
 	private Coordinates y;
+	private BufferedImage bufferImage;
 	
 	public Image(Coordinates x, Coordinates y) {
 		this.x = x;
@@ -22,20 +25,12 @@ public abstract class Image {
 		return this.coordinates;
 	}	
 	
-	public File getFile(){
-		return this.file;		
+	public BufferedImage getImage() throws IOException {
+		return this.bufferImage;
 	}
 	
-	public void setFile(File file){
-		this.file = file;
-	}
-	
-	public void setResultFileName(String name){
-		this.resultFileName = name;
-	}
-	
-	public String getResultFileName(){
-		return resultFileName;
+	public void setImage(BufferedImage image){
+		this.bufferImage = image;
 	}
 	
 }

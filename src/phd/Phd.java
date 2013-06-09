@@ -1,14 +1,19 @@
 package phd;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import phd.image.Coordinates;
 import phd.image.OpticalImage;
 import phd.image.RandomSARImage;
 import phd.image.SARImage;
+import phd.image.filter.CleanFilter;
 import phd.image.filter.ImageFilter;
 import phd.image.filter.StreetsFilter;
-import phd.image.filter.StreetsMapFilter;
+//import phd.image.filter.StreetsMapFilter;
 import phd.processing.Processing;
 import phd.storage.DefaultProxy;
 import phd.storage.ImageProxy;
@@ -18,9 +23,9 @@ public class Phd {
 		Processing p = new Processing();
 		ImageProxy store = new DefaultProxy();
 		ImageFilter<OpticalImage> streetsFilter = new StreetsFilter();
-		ImageFilter<OpticalImage> streetsMapFilter;
+//		ImageFilter<OpticalImage> streetsMapFilter;
 		CleanFilter cleanFilter;
-		OpticalImage streetMap;
+//		OpticalImage streetMap;
 
 		Coordinates x = new Coordinates(1, 2);
 		Coordinates y = new Coordinates(3, 4);
@@ -32,14 +37,18 @@ public class Phd {
 			
 			// Retrieve optical image for the same coordinates as SAR image
 			OpticalImage img = store.retrieveOptical(sar.getCoordinates());
+				
 			
 			// Filter optical image for streets and return b/w image
 			try {
+				File file = new File("test.jpg");
+				BufferedImage bufferImage = ImageIO.read(file);
+				img.setImage(bufferImage);
 				
 				img = streetsFilter.filter(img);
 			
 				// Retrieve open street map image for same coordinates as SAR image
-				streetMap = store.retrieveStreetMap(sar.getCoordinates());
+//				streetMap = store.retrieveStreetMap(sar.getCoordinates());
 				
 				// Refine filtering of streets
 //				streetsMapFilter = new StreetsMapFilter(streetMap);
