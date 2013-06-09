@@ -1,5 +1,7 @@
 package phd;
 
+import java.io.IOException;
+
 import phd.image.OpticalImage;
 import phd.image.RandomSARImage;
 import phd.image.SARImage;
@@ -27,18 +29,25 @@ public class Phd {
 			OpticalImage img = store.retrieveOptical(sar.getCoordinates());
 			
 			// Filter optical image for streets and return b/w image
-			img = streetsFilter.filter(img);
+			try {
+				
+				img = streetsFilter.filter(img);
 			
-			// Retrieve open street map image for same coordinates as SAR image
-			streetMap = store.retrieveStreetMap(sar.getCoordinates());
+				// Retrieve open street map image for same coordinates as SAR image
+				streetMap = store.retrieveStreetMap(sar.getCoordinates());
+				
+				// Refine filtering of streets
+				streetsMapFilter = new StreetsMapFilter(streetMap);
+				img = streetsMapFilter.filter(img);
+	
+				// Apply elevation data from SAR image to b/w image
+				OpticalImage result = p.analyse(img, sar);		
+				store.store(result);
 			
-			// Refine filtering of streets
-			streetsMapFilter = new StreetsMapFilter(streetMap);
-			img = streetsMapFilter.filter(img);
-
-			// Apply elevation data from SAR image to b/w image
-			OpticalImage result = p.analyse(img, sar);		
-			store.store(result);			
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		
