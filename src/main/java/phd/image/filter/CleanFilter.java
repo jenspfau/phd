@@ -67,22 +67,22 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 	}
 
 
-	private float calculateElevationDifference(BufferedImage img, int x, int y) {
-		int numNeighbours = 0;
-		int differences = 0;
-		
-		for (int i = 0; i < neighbours.length; i++) {
-			int nX = x + neighbours[i][0];
-			int nY = y + neighbours[i][1];
-			
-			if (nX > 0 && nY > 0 && nY < img.getWidth() && nX < img.getHeight()) {
-				numNeighbours++;
-				differences += (sar.get(nX, nY) - sar.get(x, y));
-			}
-		}
-		
-		return differences/numNeighbours;
-	}
+//	private float calculateElevationDifference(BufferedImage img, int x, int y) {
+//		int numNeighbours = 0;
+//		int differences = 0;
+//		
+//		for (int i = 0; i < neighbours.length; i++) {
+//			int nX = x + neighbours[i][0];
+//			int nY = y + neighbours[i][1];
+//			
+//			if (nX > 0 && nY > 0 && nY < img.getWidth() && nX < img.getHeight()) {
+//				numNeighbours++;
+//				differences += (sar.get(nX, nY) - sar.get(x, y));
+//			}
+//		}
+//		
+//		return differences/numNeighbours;
+//	}
 
 	private double calculateNeighboursBlack(BufferedImage img, int x, int y) {
 		int numNeighbours = 0;
