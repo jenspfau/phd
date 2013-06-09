@@ -49,8 +49,8 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 			}
 		}
 		OpticalImage filteredImage = new OpticalImage(
-				image.getCoordinates().get(0),
-				image.getCoordinates().get(1));
+				image.getTopLeftCoords(),
+				image.getBottomRightCoords());
 		filteredImage.setImage(result);
 		return filteredImage;
 	}

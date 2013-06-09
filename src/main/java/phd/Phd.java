@@ -34,7 +34,7 @@ public class Phd {
 			SARImage sar = new RandomSARImage(x, y);
 			
 			// Retrieve optical image for the same coordinates as SAR image
-			OpticalImage img = store.retrieveOptical(sar.getCoordinates());
+			OpticalImage img = store.retrieveOptical(sar.getTopLeftCoords(), sar.getBottomRightCoords());
 				
 			
 			// Filter optical image for streets and return b/w image

@@ -12,8 +12,8 @@ public interface ImageProxy {
 	public List<SARImage> retrieve(OpticalImage reference);
 	
 	// Retrieve optical image for given coordinates
-	public OpticalImage retrieveOptical(List<Coordinates> coordinates);
+	public OpticalImage retrieveOptical(Coordinates topLeftCoords, Coordinates bottomRightCoords);
 	
 	// Retrieve street map image for given coordinates
-	public OpticalImage retrieveStreetMap(List<Coordinates> coordinates);
+	public OpticalImage retrieveStreetMap(Coordinates topLeftCoords, Coordinates bottomRightCoords);
 }
