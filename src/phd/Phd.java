@@ -2,6 +2,7 @@ package phd;
 
 import java.io.IOException;
 
+import phd.image.Coordinates;
 import phd.image.OpticalImage;
 import phd.image.RandomSARImage;
 import phd.image.SARImage;
@@ -18,12 +19,16 @@ public class Phd {
 		ImageProxy store = new DefaultProxy();
 		ImageFilter<OpticalImage> streetsFilter = new StreetsFilter();
 		ImageFilter<OpticalImage> streetsMapFilter;
+		CleanFilter cleanFilter;
 		OpticalImage streetMap;
+
+		Coordinates x = new Coordinates(1, 2);
+		Coordinates y = new Coordinates(3, 4);
 		
 				
 		for (int i = 0; i < 10; i++) {
 			// Create a random SAR image that we are going to process
-			SARImage sar = new RandomSARImage();
+			SARImage sar = new RandomSARImage(x, y);
 			
 			// Retrieve optical image for the same coordinates as SAR image
 			OpticalImage img = store.retrieveOptical(sar.getCoordinates());
@@ -37,8 +42,11 @@ public class Phd {
 				streetMap = store.retrieveStreetMap(sar.getCoordinates());
 				
 				// Refine filtering of streets
-				streetsMapFilter = new StreetsMapFilter(streetMap);
-				img = streetsMapFilter.filter(img);
+//				streetsMapFilter = new StreetsMapFilter(streetMap);
+//				img = streetsMapFilter.filter(img);
+				
+				cleanFilter = new CleanFilter(sar);
+				img = cleanFilter.filter(img);
 	
 				// Apply elevation data from SAR image to b/w image
 				OpticalImage result = p.analyse(img, sar);		
@@ -49,8 +57,6 @@ public class Phd {
 				e.printStackTrace();
 			}
 		}
-		
-		
 		
 	}
 
