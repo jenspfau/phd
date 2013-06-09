@@ -1,6 +1,5 @@
 package phd.image.filter;
 
-import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -33,6 +32,22 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 				
 			}
 		}
+		OpticalImage filteredImage = new OpticalImage(
+				image.getCoordinates().get(0),
+				image.getCoordinates().get(1));
+		filteredImage.setImage(result);
+		return filteredImage;
+	}
+
+	private float calculateRoadDistance(int x, int y) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	private float calculateElevationDifference(BufferedImage bufferImage,
+			SARImage sar2, int x, int y) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 	private float calculateNeighboursBlack(BufferedImage img, int x, int y) {
