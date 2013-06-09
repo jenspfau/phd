@@ -9,7 +9,7 @@ public abstract class Image {
 	private Date creationDate;
 	private Coordinates topLeftCoords;
 	private Coordinates bottomRightCoords;
-	private BufferedImage bufferImage;
+	protected BufferedImage bufferImage;
 
 	public Image(Coordinates topLeftCoords, Coordinates bottomRightCoords) {
 		this.topLeftCoords = topLeftCoords;

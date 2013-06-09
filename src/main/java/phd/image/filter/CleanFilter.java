@@ -66,7 +66,7 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 		
 		for (int i = 0; i < neighbours.length; i++) {
 			int nX = x + neighbours[i][0];
-			int nY = x + neighbours[i][1];
+			int nY = y + neighbours[i][1];
 			
 			if (nX > 0 && nY > 0 && nY < img.getWidth() && nX < img.getHeight()) {
 				numNeighbours++;
@@ -83,7 +83,7 @@ public class CleanFilter implements ImageFilter<OpticalImage> {
 		
 		for (int i = 0; i < neighbours.length; i++) {
 			int nX = x + neighbours[i][0];
-			int nY = x + neighbours[i][1];
+			int nY = y + neighbours[i][1];
 			
 			if (nX > 0 && nY > 0 && nY < img.getWidth() && nX < img.getHeight()) {
 				numNeighbours++;
